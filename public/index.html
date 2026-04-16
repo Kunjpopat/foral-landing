@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>foral — Know before you eat</title>
+<meta name="description" content="Scan any menu, label, or dish in any language. Get an instant safety check for your exact diet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--m:#4A7C59;--md:#2E5039;--mk:#1F3829;--mm:#6A9F7A;--ml:#D8EDE0;--mx:#EEF7F2;--w:#FFF;--t:#1A2414;--t2:#4A5568;--t3:#8A9299;--bd:rgba(26,36,20,0.08);--safe:#22C55E;--caut:#F59E0B;--dang:#EF4444}
+html{scroll-behavior:smooth}
+body{font-family:'Lexend',sans-serif;color:var(--t);background:var(--w);-webkit-font-smoothing:antialiased;line-height:1.5}
+.bri{font-family:'Bricolage Grotesque',sans-serif}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(26,36,20,0.05)}
+.nav-in{max-width:1400px;margin:0 auto;padding:14px 40px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:26px;font-weight:800;color:var(--t);letter-spacing:-0.5px;display:flex;align-items:center;gap:4px;text-decoration:none;line-height:1}
+.nav-logo .al{color:var(--m)}
+.nav-logo svg{width:28px;height:28px}
+.nav-cta{padding:10px 22px;background:var(--m);color:white;border:none;border-radius:99px;font-family:'Lexend',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.nav-cta:hover{background:var(--md);transform:translateY(-1px)}
+
+/* HERO */
+.hero{background:var(--md);background-image:radial-gradient(ellipse at 85% 20%,rgba(106,159,122,.28) 0%,transparent 55%),radial-gradient(ellipse at 15% 85%,rgba(74,124,89,.22) 0%,transparent 55%);color:#fff;position:relative;overflow:hidden;padding:80px 40px 100px}
+.hero-orb{position:absolute;border-radius:50%;background:rgba(255,255,255,.03);pointer-events:none}
+.hero-orb.a{width:400px;height:400px;top:-100px;right:-80px}
+.hero-orb.b{width:250px;height:250px;bottom:40px;left:-60px}
+.hero-in{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-kicker{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:24px}
+.hero-h{font-size:clamp(48px,6vw,76px);font-weight:800;line-height:1;letter-spacing:-.04em;margin-bottom:24px}
+.hero-sub{font-size:19px;font-weight:300;line-height:1.6;color:rgba(255,255,255,.75);max-width:540px;margin-bottom:40px}
+.ef{display:flex;gap:10px;max-width:500px;margin-bottom:16px}
+.ei{flex:1;padding:18px 22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#fff;font-family:'Lexend',sans-serif;font-size:15px;outline:none;transition:all .2s}
+.ei::placeholder{color:rgba(255,255,255,.4)}
+.ei:focus{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
+.es{padding:18px 32px;background:#fff;color:var(--md);border:none;border-radius:99px;font-family:'Lexend',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.es:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,0,0,.2)}
+.hero-fine{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:16px}
+
+/* PHONE FRAMES */
+.pf{background:#0a0a0a;border-radius:36px;padding:6px;position:relative;box-shadow:0 40px 80px rgba(0,0,0,.3),0 16px 32px rgba(0,0,0,.2)}
+.pf.tilt{transform:rotate(-4deg)}
+.ps{width:100%;aspect-ratio:9/19.5;border-radius:30px;position:relative;overflow:hidden;background:var(--w)}
+.pn{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:80px;height:22px;background:#0a0a0a;border-radius:16px;z-index:50}
+
+/* Hero phone size */
+.hero-pw{display:flex;justify-content:center;align-items:center}
+.hero-pw .pf{width:280px}
+
+/* SECTIONS */
+.sec{padding:120px 40px;background:var(--w)}
+.sec-in{max-width:1400px;margin:0 auto;position:relative;z-index:1}
+.sec-hd{text-align:center;margin-bottom:72px}
+.sec-k{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--m);margin-bottom:16px}
+.sec-h{font-size:clamp(36px,4.5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--t);margin-bottom:20px}
+.sec-sub{font-size:18px;font-weight:300;line-height:1.6;color:var(--t2);max-width:640px;margin:0 auto}
+
+/* HOW IT WORKS */
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1000px;margin:0 auto}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center}
+.step .pf{width:220px;margin-bottom:28px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--m);color:#fff;font-weight:800;font-size:18px;margin-bottom:16px}
+.step-t{font-size:26px;font-weight:700;color:var(--t);margin-bottom:10px;letter-spacing:-.02em}
+.step-d{font-size:15px;color:var(--t2);line-height:1.6;max-width:300px}
+
+/* SEE IT IN ACTION */
+.action{background:linear-gradient(180deg,var(--md) 0%,var(--md) 40%,var(--w) 100%);padding:120px 40px 100px;color:#fff;position:relative;overflow:hidden}
+.action::before{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse at 80% 0%,rgba(106,159,122,.2) 0%,transparent 50%);pointer-events:none}
+.action .sec-k{color:rgba(255,255,255,.6)}
+.action .sec-h{color:#fff}
+.action .sec-sub{color:rgba(255,255,255,.7)}
+.act-phones{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;max-width:960px;margin:0 auto;position:relative;z-index:1}
+.act-p{display:flex;flex-direction:column;align-items:center}
+.act-p:nth-child(1){transform:translateY(10px) rotate(-2deg)}
+.act-p:nth-child(2){transform:translateY(-4px)}
+.act-p:nth-child(3){transform:translateY(10px) rotate(2deg)}
+.act-p .pf{width:220px}
+.act-label{margin-top:16px;font-size:12px;font-weight:600;color:rgba(255,255,255,.7);padding:5px 14px;background:rgba(0,0,0,.2);border-radius:99px;border:1px solid rgba(255,255,255,.1)}
+
+/* PERSONALIZE */
+.pers-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto}
+.pers-text{padding-right:20px}
+.pers-text .sec-hd{text-align:left;margin-bottom:0}
+.pers-text .sec-sub{margin:0 0 24px;text-align:left}
+.re{display:flex;flex-direction:column;gap:10px;margin-top:24px;margin-bottom:28px}
+.re-item{padding:14px 18px 14px 22px;background:var(--mx);border-left:3px solid var(--m);border-radius:0 10px 10px 0;font-size:15px;color:var(--t);font-style:italic;line-height:1.5;position:relative}
+.re-item::before{content:'\201C';position:absolute;top:2px;left:8px;font-size:24px;font-weight:800;color:var(--m);line-height:1}
+.pr{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px;padding-top:24px;border-top:1px solid var(--bd);max-width:420px}
+.pr-item{display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}
+.pr-v{font-size:36px;font-weight:800;color:var(--m);letter-spacing:-.03em;line-height:1}
+.pr-l{font-size:12px;color:var(--t3);font-weight:500}
+.pers-pw{display:flex;flex-direction:column;align-items:center;gap:36px;padding-bottom:8px}
+.pers-tabs{display:flex;gap:4px;background:var(--w);border-radius:99px;padding:4px;border:1px solid var(--bd)}
+.pers-tab{padding:9px 16px;border:none;background:transparent;color:var(--t2);font-family:'Lexend',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border-radius:99px;transition:all .2s;white-space:nowrap}
+.pers-tab.active{background:var(--m);color:#fff;box-shadow:0 4px 12px rgba(74,124,89,.25)}
+.pers-tab:not(.active):hover{background:rgba(0,0,0,.04);color:var(--t)}
+.pers-pw .pf{width:260px}
+.pp{display:none}
+.pp.active{display:block;animation:fi .4s ease-out}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* BUILT FOR */
+.bf{background:var(--md);background-image:radial-gradient(ellipse at 20% 20%,rgba(106,159,122,.18) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(74,124,89,.15) 0%,transparent 55%);position:relative;overflow:hidden;color:#fff}
+.bf .sec-k{color:rgba(255,255,255,.55)}
+.bf .sec-h{color:#fff}
+.bf .sec-sub{color:rgba(255,255,255,.7)}
+.ag{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:0 auto}
+.ac{background:var(--w);border-radius:20px;padding:32px 24px;text-align:center;border:1px solid rgba(255,255,255,.12);transition:all .3s}
+.ac:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.2)}
+.ac-icon{font-size:40px;margin-bottom:16px}
+.ac-t{font-size:18px;font-weight:700;color:var(--t);margin-bottom:10px;letter-spacing:-.02em}
+.ac-d{font-size:13px;color:var(--t2);line-height:1.6}
+
+/* WHY FORAL */
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1100px;margin:0 auto}
+.wc{background:var(--w);border-radius:24px;padding:36px;display:flex;gap:20px;align-items:flex-start;transition:all .3s;border:1px solid rgba(74,124,89,.12)}
+.wc:hover{border-color:var(--ml);transform:translateY(-2px);box-shadow:0 20px 40px rgba(74,124,89,.08)}
+.wc-icon svg{width:40px;height:40px;stroke:var(--m);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.wc h3{font-size:20px;font-weight:700;color:var(--t);margin-bottom:8px;letter-spacing:-.02em}
+.wc p{font-size:14px;color:var(--t2);line-height:1.6}
+.wc p em{font-style:normal;color:var(--m);font-weight:500}
+
+/* FINAL CTA */
+.fcta{background:var(--md);background-image:radial-gradient(ellipse at 15% 20%,rgba(106,159,122,.25) 0%,transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(74,124,89,.2) 0%,transparent 55%);color:#fff;padding:120px 40px;text-align:center;position:relative;overflow:hidden}
+.fcta::before{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.02);top:-100px;right:-100px}
+.fcta-in{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.fcta .sec-h{color:#fff;margin-bottom:20px}
+.fcta-sub{font-size:18px;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto}
+.fcta .ef{margin:0 auto 16px;justify-content:center}
+.fcta .hero-fine{text-align:center;margin-bottom:0}
+
+/* FOOTER */
+.ft{background:var(--mk);color:rgba(255,255,255,.5);padding:48px 40px 32px;text-align:center}
+.ft-logo{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:6px}
+.ft-logo .al{color:var(--mm)}
+.ft-tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:24px}
+.ft-links{display:flex;gap:24px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;align-items:center}
+.ft-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px;transition:color .2s;display:inline-flex;align-items:center;gap:5px}
+.ft-links a:hover{color:#fff}
+.ft-links a svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ft-copy{font-size:11px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+
+/* ====== MARKETING SCREEN STYLES (optimized for small frames) ====== */
+/* These use larger fonts, fewer elements, and bolder colors than real app */
+.mk{position:absolute;inset:0;overflow:hidden;font-family:'Lexend',sans-serif;text-align:left}
+
+/* Verdict marketing screen */
+.mk-v{display:flex;flex-direction:column;padding:40px 16px 16px}
+.mk-v-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.mk-v-back{width:28px;height:28px;border-radius:50%;background:#F1EEE8;display:flex;align-items:center;justify-content:center}
+.mk-v-back svg{width:12px;height:12px;stroke:#1A2414;fill:none;stroke-width:2.5;stroke-linecap:round}
+.mk-v-label{font-size:9px;font-weight:700;letter-spacing:.12em;color:#A8A298;text-transform:uppercase}
+.mk-v-name{font-weight:800;font-size:17px;color:#1E261C;line-height:1.15;letter-spacing:-.02em;margin:8px 0 2px}
+.mk-v-orig{font-size:10px;color:#A8A298}
+.mk-v-src{font-size:10px;color:#A8A298;margin-bottom:8px}
+.mk-v-banner{border-radius:16px;padding:16px 14px;margin-bottom:10px;position:relative;overflow:hidden}
+.mk-v-banner::after{content:'';position:absolute;top:-20px;right:-20px;width:60px;height:60px;background:rgba(255,255,255,.07);border-radius:50%}
+.mk-v-banner.safe{background:var(--safe)}
+.mk-v-banner.caut{background:var(--caut)}
+.mk-v-banner.dang{background:var(--dang)}
+.mk-v-banner-label{font-size:8px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:4px}
+.mk-v-banner h2{font-weight:800;font-size:22px;color:#fff;line-height:1;letter-spacing:-.03em}
+.mk-v-banner-sub{font-size:10px;color:rgba(255,255,255,.65);margin-top:6px;line-height:1.4}
+.mk-v-card{background:#fff;border:1px solid #ECE4D8;border-radius:14px;overflow:hidden;flex:1}
+.mk-v-card-hdr{padding:7px 10px 5px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F0E9DE;gap:6px;min-height:0}
+.mk-v-card-title{font-size:11px;font-weight:700;color:#1E261C;flex-shrink:0}
+.mk-v-lang{display:flex;background:#F1EEE8;border-radius:99px;padding:2px;flex-shrink:0;gap:1px}
+.mk-v-lang span{padding:2px 7px;font-size:8px;font-weight:500;color:#A8A298;white-space:nowrap;border-radius:99px}
+.mk-v-lang span:first-child{background:#fff;font-weight:600;color:var(--m)}
+.mk-v-fl{padding:6px 10px 2px;font-size:9px;font-weight:700;letter-spacing:.04em;color:#C75750}
+.mk-v-sl{padding:6px 10px 2px;font-size:9px;font-weight:700;letter-spacing:.04em;color:#228B43}
+.mk-v-row{padding:6px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #F2ECE2;gap:8px}
+.mk-v-row:last-child{border-bottom:none}
+.mk-v-row-l{display:flex;align-items:center;gap:6px;min-width:0;flex:1;overflow:hidden}
+.mk-v-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.mk-v-dot.d{background:var(--dang)}.mk-v-dot.c{background:var(--caut)}.mk-v-dot.s{background:var(--safe)}
+.mk-v-row-l>div:last-child{min-width:0;overflow:hidden}
+.mk-v-iname{font-size:11px;font-weight:500;color:#1E261C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mk-v-idet{font-size:8px;color:#A8A298;margin-top:1px}
+.mk-v-pill{font-size:8px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.mk-v-pill.sev{background:#FDF0EF;color:#C75750;border:1px solid #F0D7D5}
+.mk-v-pill.int{background:#FFF7EA;color:#B27714;border:1px solid #F2DFC1}
+.mk-v-pill.ok{background:#F1FAF3;color:#228B43;border:1px solid #D6EEDB}
+.mk-v-sc{padding:6px 10px;font-size:9px;font-weight:700;color:#228B43;border-top:1px solid #F0E9DE}
+
+/* Scan marketing screen */
+.mk-s{position:absolute;inset:0;background:#0A0F08;display:flex;flex-direction:column}
+.mk-s-top{padding:36px 14px 0;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;z-index:5}
+.mk-s-pill{display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:4px 10px 4px 4px}
+.mk-s-av{width:20px;height:20px;border-radius:50%;background:var(--m);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff}
+.mk-s-loc{font-size:10px;font-weight:500;color:rgba(255,255,255,.8)}
+.mk-s-how{font-size:10px;font-weight:500;color:rgba(255,255,255,.5);padding:4px 10px;border-radius:99px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1)}
+.mk-s-vf-area{flex:1;display:flex;align-items:center;justify-content:center;padding:10px 24px;z-index:3}
+.mk-s-vf{width:100%;height:100%;max-height:200px;border-radius:18px;border:2.5px solid rgba(255,255,255,.35);position:relative}
+.mk-s-c{position:absolute;width:22px;height:22px;border-color:var(--mm);border-style:solid}
+.mk-s-c.tl{top:12px;left:12px;border-width:3px 0 0 3px;border-radius:5px 0 0 0}
+.mk-s-c.tr{top:12px;right:12px;border-width:3px 3px 0 0;border-radius:0 5px 0 0}
+.mk-s-c.bl{bottom:12px;left:12px;border-width:0 0 3px 3px;border-radius:0 0 0 5px}
+.mk-s-c.br{bottom:12px;right:12px;border-width:0 3px 3px 0;border-radius:0 0 5px 0}
+.mk-s-line{position:absolute;left:16px;right:16px;top:42%;height:2px;background:linear-gradient(90deg,transparent,rgba(74,124,89,.6),var(--safe),rgba(74,124,89,.6),transparent);border-radius:2px}
+.mk-s-hint{flex-shrink:0;text-align:center;padding:0 14px 6px;z-index:5}
+.mk-s-hint-pill{display:inline-block;font-size:10px;color:rgba(255,255,255,.5);background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:6px 14px}
+.mk-s-tabs{flex-shrink:0;padding:0 10px 4px;z-index:5}
+.mk-s-tabs-in{display:flex;gap:3px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:3px}
+.mk-s-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 2px;border-radius:9px;border:1px solid transparent}
+.mk-s-tab.active{background:rgba(74,124,89,.25);border-color:rgba(74,124,89,.35)}
+.mk-s-tab svg{width:14px;height:14px;stroke:rgba(255,255,255,.35);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mk-s-tab.active svg{stroke:#D8EDE0}
+.mk-s-tab span{font-size:8px;font-weight:500;color:rgba(255,255,255,.35)}
+.mk-s-tab.active span{color:#D8EDE0}
+.mk-s-sh{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px 0 12px;gap:24px;z-index:5}
+.mk-s-sb{width:48px;height:48px;border-radius:50%;position:relative}
+.mk-s-sb .ring{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,255,255,.75)}
+.mk-s-sb .fill{position:absolute;inset:5px;border-radius:50%;background:#fff}
+.mk-s-side{width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center}
+.mk-s-side svg{width:14px;height:14px;stroke:rgba(255,255,255,.45);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Onboarding marketing screen */
+.mk-o{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.mk-o-top{padding:40px 16px 0;flex:1;overflow:hidden}
+.mk-o-pr{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.mk-o-sl{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--m);text-transform:uppercase}
+.mk-o-pct{font-size:9px;font-weight:600;color:#A8A298}
+.mk-o-bar{display:flex;gap:3px;margin-bottom:14px}
+.mk-o-seg{height:3px;border-radius:99px;flex:1;background:#E5E5E5}
+.mk-o-seg.done{background:var(--ml)}
+.mk-o-seg.active{background:var(--m)}
+.mk-o-k{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--m);text-transform:uppercase;margin-bottom:4px}
+.mk-o-title{font-weight:800;font-size:18px;color:var(--t);letter-spacing:-.02em;line-height:1.15;margin-bottom:6px}
+.mk-o-desc{font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:12px}
+.mk-o-sec{font-size:8px;font-weight:700;letter-spacing:.12em;color:#A8A298;text-transform:uppercase;margin-bottom:6px;margin-top:4px}
+.mk-o-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.mk-o-chip{padding:6px 12px;border-radius:99px;background:#F4F4F4;border:1.5px solid #E5E5E5;font-size:11px;font-weight:500;color:var(--t2)}
+.mk-o-chip.sel{background:var(--mx);border-color:var(--m);color:var(--m)}
+.mk-o-footer{padding:10px 16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;flex-shrink:0}
+.mk-o-skip{font-size:12px;font-weight:600;color:var(--t2)}
+.mk-o-cont{padding:12px 20px;background:var(--m);color:#fff;border-radius:99px;font-family:'Lexend',sans-serif;font-size:12px;font-weight:700;flex:1;text-align:center}
+.mk-o-ta{width:100%;min-height:60px;padding:8px 10px;background:#F4F4F4;border:1.5px solid #E5E5E5;border-radius:10px;font-family:'Lexend',sans-serif;font-size:10px;color:#888;line-height:1.5;resize:none;display:block}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-in{grid-template-columns:1fr;gap:48px;text-align:center}
+  .ef{margin-left:auto;margin-right:auto}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .steps{gap:48px}
+  .act-phones{gap:16px}
+  .pers-grid{grid-template-columns:1fr;gap:48px}
+  .pers-text{padding-right:0;text-align:center}
+  .pers-text .sec-hd{text-align:center}
+  .pers-text .sec-sub{text-align:center}
+  .pr{justify-content:center;margin-left:auto;margin-right:auto}
+  .ag{grid-template-columns:repeat(2,1fr)}
+  .wg{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .sec{padding:80px 24px}
+  .hero{padding:60px 24px 72px}
+  .nav-in{padding:12px 20px}
+  .nav-logo{font-size:22px}
+  .nav-logo svg{width:24px;height:24px}
+  .hero-pw .pf{width:240px}
+  .step .pf{width:200px}
+  .act-p .pf{width:180px}
+  .pers-pw .pf{width:240px}
+  .pers-tabs{flex-wrap:wrap;justify-content:center}
+  .pr{grid-template-columns:repeat(3,1fr);gap:16px}
+}
+@media(max-width:640px){
+  .ef{flex-direction:column}
+  .ei,.es{width:100%}
+  .steps{grid-template-columns:1fr;gap:48px}
+  .act-phones{grid-template-columns:1fr;gap:32px}
+  .act-p:nth-child(1),.act-p:nth-child(2),.act-p:nth-child(3){transform:none}
+  .act-p .pf{width:220px}
+  .ag{grid-template-columns:1fr}
+  .hero-h{font-size:42px}
+  .sec-h{font-size:32px}
+  .fcta{padding:80px 24px}
+  .ft{padding:32px 20px 24px}
+  .hero-pw .pf{width:220px}
+  .step .pf{width:200px}
+  .pers-pw .pf{width:220px}
+  .pers-tab{padding:8px 12px;font-size:11px}
+  .wc{padding:28px;gap:16px;flex-direction:column}
+
+  /* Fix personalize section gaps on mobile */
+  .pers-grid{gap:32px}
+  .pers-text .sec-hd{margin-bottom:0}
+  .sec-hd{margin-bottom:48px}
+  .re{margin-top:16px;margin-bottom:20px;gap:8px}
+  .re-item{padding:10px 16px 10px 20px;font-size:13px}
+  .re-item::before{font-size:20px;top:0;left:6px}
+
+  /* Shrink proof row on mobile */
+  .pr{gap:12px;margin-top:20px;padding-top:16px;max-width:340px}
+  .pr-v{font-size:24px}
+  .pr-l{font-size:10px}
+
+  /* Hide tab hint on mobile — tabs are already obviously tappable */
+  .pers-tabs::after{display:none}
+  .pers-pw{gap:20px}
+
+  /* Avoidances: hide extra chips on mobile to show textarea */
+  .mob-hide{display:none}
+}
+
+/* ====== MICRO-ANIMATIONS ====== */
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}
+.reveal-d2{transition-delay:.2s}
+.reveal-d3{transition-delay:.3s}
+
+/* Phone float */
+.pf{transition:transform .4s ease,box-shadow .4s ease}
+@media(min-width:641px){.hero-pw .pf:hover{transform:rotate(-2deg) translateY(-6px);box-shadow:0 60px 120px rgba(0,0,0,.45)}}
+
+/* Cards hover lift */
+.ac,.wc{transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.nav-cta,.es{transition:all .25s ease}
+
+/* Tab hint — subtle shimmer + arrow indicator */
+.pers-tabs{position:relative}
+.pers-tabs::after{
+  content:'← tap to explore →';
+  position:absolute;
+  bottom:-28px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  font-weight:500;
+  color:var(--m);
+  opacity:.6;
+  animation:tabHint 2.5s ease-in-out infinite;
+  white-space:nowrap;
+  pointer-events:none;
+}
+@keyframes tabHint{0%,100%{opacity:.3;transform:translateX(-50%)}50%{opacity:.7;transform:translateX(-50%)}}
+
+/* Active tab pulse on first load */
+.pers-tab.active{animation:tabPulse 2s ease-in-out 1}
+@keyframes tabPulse{0%{box-shadow:0 4px 12px rgba(74,124,89,.25)}50%{box-shadow:0 4px 20px rgba(74,124,89,.5)}100%{box-shadow:0 4px 12px rgba(74,124,89,.25)}}
+.pers-tabs.tapped::after{display:none}
+
+/* Section headers fade up */
+.sec-hd .sec-k,.sec-hd .sec-h,.sec-hd .sec-sub{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.sec-hd.visible .sec-k{opacity:1;transform:none;transition-delay:0s}
+.sec-hd.visible .sec-h{opacity:1;transform:none;transition-delay:.12s}
+.sec-hd.visible .sec-sub{opacity:1;transform:none;transition-delay:.24s}
+
+/* Smooth phone screen transitions */
+.pp{display:none}
+.pp.active{display:block;animation:screenIn .4s ease-out}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+
+/* ====== EMAIL POPUP MODAL ====== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .3s ease}
+.modal-overlay.open{display:flex;opacity:1}
+.modal{background:var(--w);border-radius:28px;padding:48px 40px;max-width:440px;width:100%;text-align:center;position:relative;animation:modalIn .4s ease-out}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,.05);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.modal-close:hover{background:rgba(0,0,0,.1)}
+.modal-close svg{width:16px;height:16px;stroke:var(--t);fill:none;stroke-width:2.5;stroke-linecap:round}
+.modal-icon{width:64px;height:64px;border-radius:50%;background:var(--mx);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.modal-icon svg{width:40px;height:40px}
+.modal-title{font-size:24px;font-weight:800;color:var(--t);letter-spacing:-.03em;margin-bottom:8px;line-height:1.15}
+.modal-desc{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:28px}
+.modal-form{display:flex;flex-direction:column;gap:12px}
+.modal-input{padding:16px 20px;background:#F4F4F4;border:1.5px solid #E5E5E5;border-radius:14px;font-family:'Lexend',sans-serif;font-size:15px;color:var(--t);outline:none;transition:all .2s;width:100%}
+.modal-input:focus{border-color:var(--m);background:#fff;box-shadow:0 0 0 3px rgba(74,124,89,.12)}
+.modal-input::placeholder{color:#A8A298}
+.modal-submit{padding:16px;background:var(--m);color:#fff;border:none;border-radius:14px;font-family:'Lexend',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .25s}
+.modal-submit:hover{background:var(--md);transform:translateY(-1px);box-shadow:0 8px 20px rgba(74,124,89,.3)}
+.modal-fine{font-size:12px;color:var(--t3);margin-top:8px}
+/* Success state */
+.modal-success{display:none;flex-direction:column;align-items:center;gap:16px}
+.modal-success.show{display:flex}
+.modal-form.hidden{display:none}
+.modal-check{width:64px;height:64px;border-radius:50%;background:var(--mx);display:flex;align-items:center;justify-content:center}
+.modal-check svg{width:32px;height:32px;stroke:var(--m);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:640px){.modal{padding:36px 28px;border-radius:24px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav"><div class="nav-in">
+  <a href="#" class="nav-logo bri"><span>for<span class="al">al</span></span><svg viewBox="0 0 443 443" fill="none"><path d="M221.914 384.207C442.046 212.613 342.235 59.4768 221.914 58.7931C101.593 60.844 1.78086 212.613 221.914 384.207Z" fill="#4A7C59" stroke="#4A7C59" stroke-width="15"/><path d="M204.297 296.628C201.862 299.062 197.916 299.062 195.481 296.628L140.78 241.926C132.854 231.813 147.191 220.593 155.557 227.149L198.126 269.718C199.1 270.692 200.678 270.692 201.652 269.718L295.034 176.336C304.896 168.232 317.987 183.192 309.811 191.113L204.297 296.628Z" fill="white"/><rect x="131" y="137" width="183" height="22" rx="11" fill="white" opacity=".85"/><rect x="131" y="182" width="123" height="22" rx="11" fill="white" opacity=".55"/></svg></a>
+  <a href="#wl" class="nav-cta">Join the waitlist</a>
+</div></nav>
+
+<!-- HERO -->
+<section class="hero"><div class="hero-orb a"></div><div class="hero-orb b"></div><div class="hero-in">
+  <div>
+    <div class="hero-kicker">Your diet. No borders.</div>
+    <h1 class="hero-h bri">Know before you eat.</h1>
+    <p class="hero-sub">Scan any menu, label, or dish in any language. Get an instant safety check for your exact diet &mdash; in seconds.</p>
+    <form class="ef" id="hf"><input type="email" class="ei" placeholder="your@email.com" required><button type="submit" class="es">Join waitlist</button></form>
+    <div class="hero-fine">Free early access &middot; No spam, ever</div>
+  </div>
+  <div class="hero-pw"><div class="pf tilt"><div class="ps"><div class="pn"></div>
+    <div class="mk mk-v" style="background:#fff">
+      <div class="mk-v-top"><div class="mk-v-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div><div class="mk-v-label">Scan result</div><div style="width:28px"></div></div>
+      <div class="mk-v-name bri">Lay's Spicy Paprika</div>
+      <div class="mk-v-orig">Chipsy o smaku pikantnej papryki</div>
+      <div class="mk-v-src">Lay's &middot; Poland</div>
+      <div class="mk-v-banner dang"><div class="mk-v-banner-label">Safety assessment</div><h2 class="bri">Don't eat this</h2><div class="mk-v-banner-sub">Contains dairy from milk &mdash; severe allergy.</div></div>
+      <div class="mk-v-card">
+        <div class="mk-v-card-hdr"><span class="mk-v-card-title bri">Ingredients</span><div class="mk-v-lang"><span>Translated</span><span>Polish</span></div></div>
+        <div class="mk-v-fl">1 FLAGGED</div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot d"></div><div><div class="mk-v-iname">Sour cream powder</div><div class="mk-v-idet">Dairy allergy</div></div></div><div class="mk-v-pill sev">Severe</div></div>
+        <div class="mk-v-sc">+ 14 safe ingredients</div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Potatoes</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Vegetable oils</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Salt</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Wheat breadcrumbs</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Paprika extract</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Fructose</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+      </div>
+    </div>
+  </div></div></div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section class="sec"><div class="sec-in">
+  <div class="sec-hd"><div class="sec-k">How it works</div><h2 class="sec-h bri">Two steps. Any country.</h2><p class="sec-sub">Set up your diet once. Then just point your camera.</p></div>
+  <div class="steps">
+    <div class="step">
+      <div class="pf"><div class="ps" style="background:#0A0F08"><div class="pn"></div>
+        <div class="mk mk-s">
+          <div class="mk-s-top"><div class="mk-s-pill"><div class="mk-s-av">KP</div><span class="mk-s-loc">&#127477;&#127473; Poland</span></div><div class="mk-s-how">? How to</div></div>
+          <div class="mk-s-vf-area"><div class="mk-s-vf"><div class="mk-s-c tl"></div><div class="mk-s-c tr"></div><div class="mk-s-c bl"></div><div class="mk-s-c br"></div><div class="mk-s-line"></div></div></div>
+          <div class="mk-s-hint"><div class="mk-s-hint-pill">Point at a barcode or label</div></div>
+          <div class="mk-s-tabs"><div class="mk-s-tabs-in">
+            <div class="mk-s-tab active"><svg viewBox="0 0 24 24"><path d="M3 5h2v14H3zM7 5h1v14H7zM10 5h2v14h-2zM14 5h1v14h-1zM17 5h1v14h-1zM20 5h1v14h-1z"/></svg><span>Barcode</span></div>
+            <div class="mk-s-tab"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h7M7 16h9"/></svg><span>Label</span></div>
+            <div class="mk-s-tab"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 9h12M4 13h14M4 17h10"/></svg><span>Menu</span></div>
+            <div class="mk-s-tab"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="14" rx="9" ry="5"/><path d="M3 14V10a9 5 0 0118 0v4"/></svg><span>Dish</span></div>
+          </div></div>
+          <div class="mk-s-sh"><div class="mk-s-side"><svg viewBox="0 0 24 24"><path d="M15 2H9l-2 8h4l-1 10 8-12h-5z"/></svg></div><div class="mk-s-sb"><div class="ring"></div><div class="fill"></div></div><div class="mk-s-side"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div>
+        </div>
+      </div></div>
+      <div class="step-num bri">1</div><h3 class="step-t bri">Scan</h3><p class="step-d">Point at a barcode, label, menu, or dish. Foral reads it &mdash; even in languages you can't.</p>
+    </div>
+    <div class="step">
+      <div class="pf"><div class="ps"><div class="pn"></div>
+        <div class="mk mk-v" style="background:#fff">
+          <div class="mk-v-top"><div class="mk-v-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div><div class="mk-v-label">Scan result</div><div style="width:28px"></div></div>
+          <div class="mk-v-name bri">Orange chocolate biscuit</div><div class="mk-v-orig">Biszkopt w czekoladzie</div><div class="mk-v-src">Wedel &middot; Poland</div>
+          <div class="mk-v-banner safe"><div class="mk-v-banner-label">Safety assessment</div><h2 class="bri">You're good to go</h2><div class="mk-v-banner-sub">No flagged ingredients.</div></div>
+          <div class="mk-v-card"><div class="mk-v-card-hdr"><span class="mk-v-card-title bri">Ingredients</span><div class="mk-v-lang"><span>Translated</span><span>Polish</span></div></div>
+            <div class="mk-v-sl">ALL SAFE</div>
+            <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Wheat flour</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+            <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Dark chocolate</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+            <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Sugar</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+            <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Orange peel</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="step-num bri">2</div><h3 class="step-t bri">Understand</h3><p class="step-d">AI translates every ingredient and cross-references it with your diet. Clear verdict in seconds.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- SEE IT IN ACTION -->
+<section class="action"><div class="sec-in">
+  <div class="sec-hd"><div class="sec-k">See it in action</div><h2 class="sec-h bri">One camera. Every food situation.</h2><p class="sec-sub">Point at a barcode, photograph a menu, or snap a street food dish. Foral handles the rest.</p></div>
+  <div class="act-phones">
+    <div class="act-p"><div class="pf"><div class="ps"><div class="pn"></div>
+      <div class="mk mk-v" style="background:#fff">
+        <div class="mk-v-top"><div class="mk-v-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div><div class="mk-v-label">Scan result</div><div style="width:28px"></div></div>
+        <div class="mk-v-name bri">Orange chocolate biscuit</div><div class="mk-v-orig">Biszkopt w czekoladzie</div><div class="mk-v-src">Wedel &middot; Poland</div>
+        <div class="mk-v-banner safe"><div class="mk-v-banner-label">Safety assessment</div><h2 class="bri">You're good to go</h2><div class="mk-v-banner-sub">No flagged ingredients.</div></div>
+        <div class="mk-v-card"><div class="mk-v-card-hdr"><span class="mk-v-card-title bri">Ingredients</span><div class="mk-v-lang"><span>Translated</span><span>Polish</span></div></div>
+          <div class="mk-v-sl">ALL SAFE</div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Wheat flour</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Dark chocolate</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Sugar</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Orange peel</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        </div>
+      </div>
+    </div></div><div class="act-label">Safe</div></div>
+
+    <div class="act-p"><div class="pf"><div class="ps"><div class="pn"></div>
+      <div class="mk mk-v" style="background:#fff">
+        <div class="mk-v-top"><div class="mk-v-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div><div class="mk-v-label">Scan result</div><div style="width:28px"></div></div>
+        <div class="mk-v-name bri">Crunchy peanut butter</div><div class="mk-v-orig">Beurre de cacahu&egrave;te</div><div class="mk-v-src">Menguy's &middot; France</div>
+        <div class="mk-v-banner caut"><div class="mk-v-banner-label">Safety assessment</div><h2 class="bri">Pause and check</h2><div class="mk-v-banner-sub">Contains peanuts &mdash; check tolerance.</div></div>
+        <div class="mk-v-card"><div class="mk-v-card-hdr"><span class="mk-v-card-title bri">Ingredients</span><div class="mk-v-lang"><span>Translated</span><span>French</span></div></div>
+          <div class="mk-v-fl">2 FLAGGED</div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot c"></div><div><div class="mk-v-iname">Roasted peanuts (92%)</div><div class="mk-v-idet">Peanut allergy</div></div></div><div class="mk-v-pill int">Intolerance</div></div>
+          <div class="mk-v-sc">+ 3 safe ingredients</div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Sunflower oil</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Salt</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Sugar</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        </div>
+      </div>
+    </div></div><div class="act-label">Caution</div></div>
+
+    <div class="act-p"><div class="pf"><div class="ps"><div class="pn"></div>
+      <div class="mk mk-v" style="background:#fff">
+        <div class="mk-v-top"><div class="mk-v-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></div><div class="mk-v-label">Scan result</div><div style="width:28px"></div></div>
+        <div class="mk-v-name bri">Lay's Spicy Paprika</div><div class="mk-v-orig">Chipsy o smaku pikantnej papryki</div><div class="mk-v-src">Lay's &middot; Poland</div>
+        <div class="mk-v-banner dang"><div class="mk-v-banner-label">Safety assessment</div><h2 class="bri">Don't eat this</h2><div class="mk-v-banner-sub">Contains dairy from milk.</div></div>
+        <div class="mk-v-card"><div class="mk-v-card-hdr"><span class="mk-v-card-title bri">Ingredients</span><div class="mk-v-lang"><span>Translated</span><span>Polish</span></div></div>
+          <div class="mk-v-fl">1 FLAGGED</div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot d"></div><div><div class="mk-v-iname">Sour cream powder</div><div class="mk-v-idet">Dairy allergy</div></div></div><div class="mk-v-pill sev">Severe</div></div>
+          <div class="mk-v-sc">+ 14 safe ingredients</div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Potatoes</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Vegetable oils</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+          <div class="mk-v-row"><div class="mk-v-row-l"><div class="mk-v-dot s"></div><div><div class="mk-v-iname">Salt</div></div></div><div class="mk-v-pill ok">Safe</div></div>
+        </div>
+      </div>
+    </div></div><div class="act-label">Don't eat</div></div>
+  </div>
+</div></section>
+
+<!-- PERSONALIZE -->
+<section class="sec"><div class="pers-grid">
+  <div class="pers-text">
+    <div class="sec-hd"><div class="sec-k">Your profile</div><h2 class="sec-h bri">Set up once.<br>Works everywhere.</h2></div>
+    <p class="sec-sub">Allergens, diets, religious rules, and the nuances in between. Foral handles the edge cases other apps miss.</p>
+    <div class="re"><div class="re-item">Vegan except for honey.</div><div class="re-item">Don't drink alcohol except in desserts.</div></div>
+    <div class="pr"><div class="pr-item"><div class="pr-v bri">9</div><div class="pr-l">Profile steps</div></div><div class="pr-item"><div class="pr-v bri">2 min</div><div class="pr-l">Setup time</div></div><div class="pr-item"><div class="pr-v bri">Anytime</div><div class="pr-l">Edit profile</div></div></div>
+  </div>
+  <div class="pers-pw">
+    <div class="pers-tabs" role="tablist">
+      <button class="pers-tab active" data-p="pa">Allergens</button>
+      <button class="pers-tab" data-p="pd">Diets</button>
+      <button class="pers-tab" data-p="pr">Religious</button>
+      <button class="pers-tab" data-p="pv">Avoidances</button>
+    </div>
+    <div>
+      <div class="pp active" id="pa"><div class="pf"><div class="ps"><div class="pn"></div>
+        <div class="mk mk-o"><div class="mk-o-top">
+          <div class="mk-o-pr"><div class="mk-o-sl">Step 4 of 9</div><div class="mk-o-pct">44%</div></div>
+          <div class="mk-o-bar"><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg active"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div></div>
+          <div class="mk-o-k">Allergens</div>
+          <div class="mk-o-title bri">Let's start with your allergens</div>
+          <div class="mk-o-desc">Select any allergens, intolerances, or ingredients you avoid.</div>
+          <div class="mk-o-sec">Common allergens</div>
+          <div class="mk-o-chips"><div class="mk-o-chip">Peanuts</div><div class="mk-o-chip">Tree Nuts</div><div class="mk-o-chip">Shellfish</div><div class="mk-o-chip">Fish</div><div class="mk-o-chip sel">Eggs</div><div class="mk-o-chip sel">Dairy</div><div class="mk-o-chip">Soy</div><div class="mk-o-chip">Wheat</div><div class="mk-o-chip">Sesame</div><div class="mk-o-chip">Gluten</div><div class="mk-o-chip">Mustard</div><div class="mk-o-chip">Celery</div></div>
+          <div class="mk-o-sec">More allergens</div>
+          <div class="mk-o-chips"><div class="mk-o-chip">Sulfites</div><div class="mk-o-chip">Corn</div><div class="mk-o-chip">Nightshades</div><div class="mk-o-chip">Legumes</div><div class="mk-o-chip">Citrus Fruit</div></div>
+        </div><div class="mk-o-footer"><div class="mk-o-skip">Skip</div><div class="mk-o-cont">Continue</div></div></div>
+      </div></div></div>
+
+      <div class="pp" id="pd"><div class="pf"><div class="ps"><div class="pn"></div>
+        <div class="mk mk-o"><div class="mk-o-top">
+          <div class="mk-o-pr"><div class="mk-o-sl">Step 5 of 9</div><div class="mk-o-pct">56%</div></div>
+          <div class="mk-o-bar"><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg active"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div></div>
+          <div class="mk-o-k">Diets</div>
+          <div class="mk-o-title bri">Any diets you follow?</div>
+          <div class="mk-o-desc">Select any diets. Tap to set strictness.</div>
+          <div class="mk-o-chips"><div class="mk-o-chip sel">Vegan</div><div class="mk-o-chip">Vegetarian</div><div class="mk-o-chip">Pescatarian</div><div class="mk-o-chip">Keto</div><div class="mk-o-chip">Paleo</div><div class="mk-o-chip">Mediterranean</div><div class="mk-o-chip">Low FODMAP</div><div class="mk-o-chip">Gluten Free</div><div class="mk-o-chip">Dairy Free</div></div>
+        </div><div class="mk-o-footer"><div class="mk-o-skip">Skip</div><div class="mk-o-cont">Continue</div></div></div>
+      </div></div></div>
+
+      <div class="pp" id="pr"><div class="pf"><div class="ps"><div class="pn"></div>
+        <div class="mk mk-o"><div class="mk-o-top">
+          <div class="mk-o-pr"><div class="mk-o-sl">Step 7 of 9</div><div class="mk-o-pct">78%</div></div>
+          <div class="mk-o-bar"><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg active"></div><div class="mk-o-seg"></div><div class="mk-o-seg"></div></div>
+          <div class="mk-o-k">Cultural</div>
+          <div class="mk-o-title bri">Religious or cultural preferences?</div>
+          <div class="mk-o-desc">Select any religious dietary requirements.</div>
+          <div class="mk-o-sec">Islam</div>
+          <div class="mk-o-chips"><div class="mk-o-chip sel">Halal</div><div class="mk-o-chip">Strict Halal</div><div class="mk-o-chip">No Alcohol</div></div>
+          <div class="mk-o-sec">Judaism</div>
+          <div class="mk-o-chips"><div class="mk-o-chip">Kosher</div><div class="mk-o-chip">Kosher (Glatt)</div><div class="mk-o-chip">Pareve</div></div>
+          <div class="mk-o-sec">Hinduism</div>
+          <div class="mk-o-chips"><div class="mk-o-chip">Hindu Vegetarian</div><div class="mk-o-chip">No Beef</div><div class="mk-o-chip">Sattvic</div></div>
+        </div><div class="mk-o-footer"><div class="mk-o-skip">Skip</div><div class="mk-o-cont">Continue</div></div></div>
+      </div></div></div>
+
+      <div class="pp" id="pv"><div class="pf"><div class="ps"><div class="pn"></div>
+        <div class="mk mk-o"><div class="mk-o-top">
+          <div class="mk-o-pr"><div class="mk-o-sl">Step 9 of 9</div><div class="mk-o-pct">100%</div></div>
+          <div class="mk-o-bar"><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg done"></div><div class="mk-o-seg active"></div></div>
+          <div class="mk-o-title bri">Anything else you avoid?</div>
+          <div class="mk-o-desc">Any other foods or situations you prefer to skip?</div>
+          <div class="mk-o-sec">Quick picks</div>
+          <div class="mk-o-chips"><div class="mk-o-chip">Spicy food</div><div class="mk-o-chip">Raw fish</div><div class="mk-o-chip">Organ meats</div><div class="mk-o-chip">Insects</div><div class="mk-o-chip">Street food</div><div class="mk-o-chip mob-hide">Fried food</div><div class="mk-o-chip mob-hide">Processed meat</div><div class="mk-o-chip mob-hide">Fast food</div><div class="mk-o-chip mob-hide">Raw eggs</div></div>
+          <div class="mk-o-sec">Tell us more (optional)</div>
+          <textarea class="mk-o-ta" readonly>Example: "I'm vegetarian but I eat eggs and fish when traveling."</textarea>
+        </div><div class="mk-o-footer"><div class="mk-o-skip">Skip</div><div class="mk-o-cont">Continue</div></div></div>
+      </div></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- BUILT FOR -->
+<section class="sec bf">
+  <div class="hero-orb a" style="top:-100px;left:-80px"></div><div class="hero-orb b" style="bottom:40px;right:-60px"></div>
+  <div class="sec-in">
+    <div class="sec-hd"><div class="sec-k">Built for</div><h2 class="sec-h bri">Everyone who eats differently.</h2><p class="sec-sub">Not just allergies. Every dietary restriction, every traveler.</p></div>
+    <div class="ag">
+      <div class="ac"><div class="ac-icon">&#127760;</div><h3 class="ac-t bri">Travelers</h3><p class="ac-d">Navigate foreign grocery stores and restaurants without speaking the language.</p></div>
+      <div class="ac"><div class="ac-icon">&#9888;&#65039;</div><h3 class="ac-t bri">Allergy sufferers</h3><p class="ac-d">Severe peanut, dairy, shellfish, and cross-contamination checked against every ingredient.</p></div>
+      <div class="ac"><div class="ac-icon">&#128332;</div><h3 class="ac-t bri">Religious diets</h3><p class="ac-d">Halal, Kosher, Hindu vegetarian, Jain. Hidden alcohol and animal derivatives caught instantly.</p></div>
+      <div class="ac"><div class="ac-icon">&#127793;</div><h3 class="ac-t bri">Vegans &amp; vegetarians</h3><p class="ac-d">Gelatin in gummies, casein in crisps, carmine in sweets &mdash; nothing hides from Foral.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY FORAL -->
+<section class="sec"><div class="sec-in">
+  <div class="sec-hd"><div class="sec-k">Why Foral</div><h2 class="sec-h bri">No app does all of this.</h2><p class="sec-sub">Google Translate doesn't know your diet. Foral does both.</p></div>
+  <div class="wg">
+    <div class="wc"><div class="wc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg></div><div><h3 class="bri">Any language</h3><p>Reads and translates Cyrillic, Arabic, Thai, Japanese, Korean, Chinese, and dozens more.</p></div></div>
+    <div class="wc"><div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C9.5 2 7.5 4 7.5 6.5c-1.5 0-3 1-3 3 0 1 .5 2 1.5 2.5-.5.5-1 1.5-1 2.5 0 2 1.5 3.5 3.5 3.5 0 1.5 1.5 3 3.5 3v-16z"/><path d="M12 2c2.5 0 4.5 2 4.5 4.5 1.5 0 3 1 3 3 0 1-.5 2-1.5 2.5.5.5 1 1.5 1 2.5 0 2-1.5 3.5-3.5 3.5 0 1.5-1.5 3-3.5 3v-16z"/></svg></div><div><h3 class="bri">AI that reasons</h3><p>Not just pattern matching. Foral understands nuanced profiles like <em>&ldquo;vegan except for honey.&rdquo;</em></p></div></div>
+    <div class="wc"><div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h3l1.5-2h5L16 6h3a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg></div><div><h3 class="bri">Four scan modes</h3><p>Barcode, ingredient label, restaurant menu, and street food dish &mdash; one camera handles all four.</p></div></div>
+    <div class="wc"><div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M12 2l8 3.5v6c0 5-3.5 9-8 10.5-4.5-1.5-8-5.5-8-10.5v-6L12 2z"/><path d="M8.5 12l2.5 2.5L15.5 10"/></svg></div><div><h3 class="bri">Layered restrictions</h3><p>Stack allergies, religious rules, medical conditions, lifestyle diets, and personal avoidances together.</p></div></div>
+  </div>
+</div></section>
+
+<!-- FINAL CTA -->
+<section class="fcta" id="wl"><div class="fcta-in">
+  <h2 class="sec-h bri">Your passport.<br>Your diet. One app.</h2>
+  <p class="fcta-sub">Join the waitlist for free early access. One email when we launch &mdash; that's it.</p>
+  <form class="ef" id="cf"><input type="email" class="ei" placeholder="your@email.com" required><button type="submit" class="es">Join waitlist</button></form>
+  <div class="hero-fine" style="text-align:center;margin-bottom:0">Free early access &middot; No spam, ever</div>
+</div></section>
+
+<!-- FOOTER -->
+<footer class="ft"><div>
+  <div class="ft-logo bri">for<span class="al">al</span></div>
+  <div class="ft-tag">Your diet. No borders.</div>
+  <div class="ft-links">
+    <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+    <a href="#">Privacy</a><a href="#">Terms</a><a href="mailto:hello@foral.app">Contact</a>
+  </div>
+  <div class="ft-copy">foral.app &middot; &copy; 2026 Foral</div>
+</div></footer>
+
+<!-- EMAIL POPUP MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div class="modal-form" id="modalForm">
+      <div class="modal-icon"><svg viewBox="0 0 443 443" fill="none"><path d="M221.914 384.207C442.046 212.613 342.235 59.4768 221.914 58.7931C101.593 60.844 1.78086 212.613 221.914 384.207Z" fill="#4A7C59" stroke="#4A7C59" stroke-width="15"/><path d="M204.297 296.628C201.862 299.062 197.916 299.062 195.481 296.628L140.78 241.926C132.854 231.813 147.191 220.593 155.557 227.149L198.126 269.718C199.1 270.692 200.678 270.692 201.652 269.718L295.034 176.336C304.896 168.232 317.987 183.192 309.811 191.113L204.297 296.628Z" fill="white"/><rect x="131" y="137" width="183" height="22" rx="11" fill="white" opacity=".85"/><rect x="131" y="182" width="123" height="22" rx="11" fill="white" opacity=".55"/></svg></div>
+      <h3 class="modal-title bri">Join the waitlist</h3>
+      <p class="modal-desc">Get free early access when Foral launches. One email &mdash; that's it.</p>
+      <input type="email" class="modal-input" id="modalEmail" placeholder="your@email.com" required>
+      <button class="modal-submit" id="modalSubmit">Get early access</button>
+      <div class="modal-fine">No spam, ever. Unsubscribe anytime.</div>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div class="modal-check"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h3 class="modal-title bri">You're on the list!</h3>
+      <p class="modal-desc">We'll send you one email when Foral is ready. Until then, follow us on Instagram for updates.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Modal
+const modal = document.getElementById('modal');
+const modalForm = document.getElementById('modalForm');
+const modalSuccess = document.getElementById('modalSuccess');
+const modalEmail = document.getElementById('modalEmail');
+const modalSubmit = document.getElementById('modalSubmit');
+
+function openModal() {
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => modalEmail.focus(), 400);
+}
+function closeModal() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on X, overlay click, Escape
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Submit
+modalSubmit.addEventListener('click', () => {
+  if (!modalEmail.value || !modalEmail.validity.valid) {
+    modalEmail.style.borderColor = '#EF4444';
+    modalEmail.focus();
+    return;
+  }
+  // TODO: Wire to Supabase
+  modalForm.classList.add('hidden');
+  modalSuccess.classList.add('show');
+  setTimeout(closeModal, 3000);
+});
+modalEmail.addEventListener('keydown', e => { if (e.key === 'Enter') modalSubmit.click(); });
+modalEmail.addEventListener('input', () => { modalEmail.style.borderColor = ''; });
+
+// All CTA buttons and forms open the modal
+document.querySelectorAll('form').forEach(f => {
+  f.addEventListener('submit', e => { e.preventDefault(); openModal(); });
+});
+document.querySelectorAll('.nav-cta').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); openModal(); });
+});
+
+// Tab switcher
+document.querySelectorAll('.pers-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.pers-tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.pp').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.p).classList.add('active');
+    // Hide the hint after first interaction
+    const hint = document.querySelector('.pers-tabs::after');
+    document.querySelector('.pers-tabs').classList.add('tapped');
+  });
+});
+
+// Scroll reveal with Intersection Observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+// Observe all section headers
+document.querySelectorAll('.sec-hd').forEach(el => observer.observe(el));
+
+// Observe cards and steps with staggered delays
+document.querySelectorAll('.ac, .wc, .step, .act-p, .re-item, .pr-item').forEach((el, i) => {
+  el.classList.add('reveal');
+  el.style.transitionDelay = (i % 4) * 0.1 + 's';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
