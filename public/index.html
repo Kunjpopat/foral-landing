@@ -736,10 +736,49 @@ modalSubmit.addEventListener('click', async () => {
 modalEmail.addEventListener('keydown', e => { if (e.key === 'Enter') modalSubmit.click(); });
 modalEmail.addEventListener('input', () => { modalEmail.style.borderColor = ''; });
 
-// All CTA buttons and forms open the modal
+// Shared Supabase submit function
+async function submitToWaitlist(email) {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ email: email.toLowerCase().trim() })
+  });
+  if (res.ok || res.status === 201) return 'success';
+  if (res.status === 409) return 'duplicate';
+  throw new Error('Server error');
+}
+
+// Inline forms (hero + final CTA) — submit directly, no popup
 document.querySelectorAll('form').forEach(f => {
-  f.addEventListener('submit', e => { e.preventDefault(); openModal(); });
+  f.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = f.querySelector('input[type="email"]');
+    const btn = f.querySelector('button');
+    if (!input.value || !input.validity.valid) { input.style.borderColor = '#EF4444'; input.focus(); return; }
+
+    const origText = btn.textContent;
+    btn.textContent = 'Joining...';
+    btn.style.opacity = '0.7';
+
+    try {
+      const result = await submitToWaitlist(input.value);
+      // Replace form with success message
+      f.innerHTML = '<div style="padding:16px 24px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:99px;font-size:15px;font-weight:600;color:white;text-align:center;display:flex;align-items:center;gap:8px;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>' +
+        (result === 'duplicate' ? "You're already on the list!" : "You're in! We'll email you at launch.") + '</div>';
+    } catch (err) {
+      btn.textContent = origText;
+      btn.style.opacity = '1';
+      input.style.borderColor = '#EF4444';
+    }
+  });
 });
+
+// Nav CTA only opens modal
 document.querySelectorAll('.nav-cta').forEach(a => {
   a.addEventListener('click', e => { e.preventDefault(); openModal(); });
 });
